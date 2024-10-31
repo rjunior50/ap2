@@ -14,21 +14,26 @@
         <input type="number" id="altura" step="0.01" required><br>
         <button type="button" onclick="calcularIMC()">Calcular IMC</button>
     </form>
-    <p id="resultado"></p>
+    <p id="resultado" aria-required="true"></p>
 
     <script>
         function calcularIMC() {
             const peso = document.getElementById('peso').value;
             const altura = document.getElementById('altura').value;
-            const imc = (peso / (altura * altura)).toFixed(2);
 
+            if (!peso || !altura) {
+                document.getElementById('resultado').innerText = "Por favor, insira peso e altura para calcular o IMC.";
+                return;
+            }
+
+            const imc = (peso / (altura * altura)).toFixed(2);
             let mensagem = "";
+
             if (imc < 18.5) {
                 mensagem = "Abaixo do peso.";
-                console.log("OI");
             } else if (imc >= 18.5 && imc <= 24.9) {
                 mensagem = "Peso normal.";
-            } else {
+            } else if (imc > 24.9) {
                 mensagem = "Acima do peso.";
             }
 
