@@ -9,20 +9,25 @@
     <h1>Calculadora de IMC</h1>
     <form id="imc-form">
         <label for="peso">Peso (kg):</label>
-        <input type="number" id="peso" required><br>
+        <input type="number" id="peso" min="1" required><br>
         <label for="altura">Altura (m):</label>
-        <input type="number" id="altura" step="0.01" required><br>
+        <input type="number" id="altura" step="0.01" min="0.1" required><br>
         <button type="button" onclick="calcularIMC()">Calcular IMC</button>
     </form>
     <p id="resultado" aria-required="true"></p>
 
     <script>
         function calcularIMC() {
-            const peso = document.getElementById('peso').value;
-            const altura = document.getElementById('altura').value;
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
 
-            if (!peso || !altura) {
-                document.getElementById('resultado').innerText = "Por favor, insira peso e altura para calcular o IMC.";
+            // Verificação de valores inválidos
+            if (!peso || peso <= 0) {
+                document.getElementById('resultado').innerText = "Por favor, insira um peso válido maior que zero.";
+                return;
+            }
+            if (!altura || altura <= 0) {
+                document.getElementById('resultado').innerText = "Por favor, insira uma altura válida maior que zero.";
                 return;
             }
 
